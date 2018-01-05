@@ -106,7 +106,13 @@ public class PacemakerRestService {
   public void deleteUser(Context ctx) {
     String id = ctx.param("id");
     System.out.println("ID in deleteUser::>" + id);
-    ctx.json(pacemaker.deleteUser(id));
+    User user = pacemaker.deleteUser(id);
+    if (null != user) {
+      ctx.json(user);
+    } else {
+      ctx.status(404);
+    }
+    
   }
 
   public void deleteUsers(Context ctx) {

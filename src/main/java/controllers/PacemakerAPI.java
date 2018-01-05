@@ -22,16 +22,16 @@ public class PacemakerAPI {
   public PacemakerAPI() {
   }
 
-  public Collection<User> getUsers() {
+  public Collection<User> getUsers() {//k
     return userIndex.values();
   }
 
-  public void deleteUsers() {
+  public void deleteUsers() {//k
     userIndex.clear();
     emailIndex.clear();
   }
 
-  public User createUser(String firstName, String lastName, String email, String password) {
+  public User createUser(String firstName, String lastName, String email, String password) {//k
     User user = new User(firstName, lastName, email, password);
     emailIndex.put(email, user);
     userIndex.put(user.id, user);
@@ -45,7 +45,7 @@ public class PacemakerAPI {
     return user;
   }
 
-  public Activity createActivity(String id, String type, String location, double distance) {
+  public Activity createActivity(String id, String type, String location, double distance) {//k
     Activity activity = null;
     Optional<User> user = Optional.fromNullable(userIndex.get(id));
     if (user.isPresent()) {
@@ -56,7 +56,7 @@ public class PacemakerAPI {
     return activity;
   }
 
-  public Activity getActivity(String activityId) {
+  public Activity getActivity(String activityId) {//k
     return activitiesIndex.get(activityId);
   }
 
@@ -102,8 +102,13 @@ public class PacemakerAPI {
   }
 
   public User deleteUser(String id) {
-    User user = userIndex.remove(id);
-    return emailIndex.remove(user.email);
+    Optional<User> user = Optional.fromNullable(userIndex.get(id));
+    User userReturn = null;
+    if (user.isPresent()) {
+      userReturn = userIndex.remove(id);
+      userReturn = emailIndex.remove(userReturn.email);
+    }
+    return userReturn;
   }
 
   public List<Location> getLocations(String id)
