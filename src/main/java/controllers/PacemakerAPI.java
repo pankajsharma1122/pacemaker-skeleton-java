@@ -60,7 +60,7 @@ public class PacemakerAPI {
     return activitiesIndex.get(activityId);
   }
 
-  public Collection<Activity> getActivities(String userId) {
+  public Collection<Activity> getActivities(String userId) {//k
     Collection<Activity> activities = null;
     Optional<User> user = Optional.fromNullable(userIndex.get(userId));
     if (user.isPresent()) {
